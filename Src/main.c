@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "assignment.h"
+#include "stdio.h"
 
 int main(void)
 {
@@ -47,12 +48,21 @@ int main(void)
 
   /* Enable clock for GPIO port A*/
 
-	//type your code for GPIOA clock enable here:
+  RCC_AHBENR_REG |= (1 << 17);
 
 
   /* GPIOA pin 3 and 4 setup */
 
-	//type your code for GPIOA pins setup here:
+
+  GPIOA_MODER_REG &= ~(3 << 6); //3 is input
+  GPIOA_MODER_REG &= ~(1 << 9); // 4 is output
+  GPIOA_MODER_REG |= (1 << 8); // 4 is output 01 (98)
+
+  GPIOA_OTYPER_REG &= ~(1 << 4); //output is push/pull
+  GPIOA_OSPEEDER_REG &= ~(1 << 8); //output is lowspeed
+
+  GPIOA_PUPDR_REG &= ~(1 << 7); //input is  01 (76) Pull-up
+  GPIOA_PUPDR_REG |= (1 << 6);
 
 
   while (1)
